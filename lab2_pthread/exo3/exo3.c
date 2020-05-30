@@ -20,7 +20,7 @@ void *integrate(void *ignored){
         pthread_mutex_unlock(&mutex1);
 
         if(local_abs < global_abs){
-            partial_sum += step*(4/(1+local_abs*local_abs));
+            partial_sum += 4/(1+local_abs*local_abs);
         }
     }
     while(global_abs <= 1);
@@ -46,6 +46,7 @@ int main(){
     end = clock();
     diffTime = ((float)(end - start)/CLOCKS_PER_SEC)*1000;
     printf("Time taken for the calculation: %.2f ms\n", diffTime);
+    sum = step*sum;
     printf("Integration of 4.0/(1+x²) from 0 to 1 is: %f\n",sum);
     printf("main thread end\n");
 }

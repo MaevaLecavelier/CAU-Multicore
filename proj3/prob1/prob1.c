@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
         exit(0);
     }
     int num_threads, i, tid, schedule;
-    int end_num = 100;
+    int end_num = 200000;
     int sum = 0;
     double start, end;
     schedule = atoi(argv[1]);
@@ -33,7 +33,6 @@ int main(int argc, char *argv[]){
         start = omp_get_wtime();
         #pragma omp parallel for reduction(+:sum) private(tid) schedule(static)
         for(i = 0; i < end_num; i++){
-            printf("id thread: %d \t\t %f\n", omp_get_thread_num(), omp_get_wtime());
             if(isPrime(i)) sum++;
         }
         end = omp_get_wtime();
@@ -44,7 +43,6 @@ int main(int argc, char *argv[]){
         start = omp_get_wtime();
         #pragma omp parallel for reduction(+:sum) private(tid) schedule(dynamic, 4)
         for(i = 0; i < end_num; i++){
-            printf("id thread: %d \t\t %f\n", omp_get_thread_num(), omp_get_wtime());
             if(isPrime(i)) sum += 1;
         }
         end = omp_get_wtime();
@@ -56,7 +54,6 @@ int main(int argc, char *argv[]){
         start = omp_get_wtime();
     #pragma omp parallel for reduction(+:sum) private(tid) schedule(guided, 4)
         for(i = 0; i < end_num; i++){
-            printf("id thread: %d \t\t %f\n", omp_get_thread_num(), omp_get_wtime());
             if(isPrime(i)) sum += 1;
         }
         end = omp_get_wtime();
